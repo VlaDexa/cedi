@@ -9,7 +9,7 @@ It will not have only 6 files possible to open though! Actually it will progress
 
 
 ## Progress
-- [ ] Rendering something
+- [x] Rendering something
 - [ ] Rendering actual characters (only ASCII though?)
 - [ ] Rendering files contents
 - [ ] Editing the file
