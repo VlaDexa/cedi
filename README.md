@@ -4,7 +4,7 @@
 
 ## The gimmick
 
-Currently, the idia is to write just a simple text editor that can switch files with anumation of a cube rotating.
+Currently, the idia is to write just a simple text editor that can switch files with animation of a cube rotating.
 It will not have only 6 files possible to open though! Actually it will progress more like an *infinite* labyrinth.
 
 
