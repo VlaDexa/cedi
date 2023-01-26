@@ -10,7 +10,7 @@ It will not have only 6 files possible to open though! Actually it will progress
 
 ## Progress
 - [x] Rendering something
-- [ ] Rendering actual characters (only ASCII though?)
+- [x] Rendering actual characters (only ASCII though?)
 - [ ] Rendering files contents
 - [ ] Editing the file
 - [ ] Rotation animation
