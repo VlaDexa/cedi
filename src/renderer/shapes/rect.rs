@@ -27,15 +27,19 @@ impl Rect {
 impl From<Rect> for sdl2::rect::Rect {
     fn from(rect: Rect) -> Self {
         let [top_left, down_right] = rect.points;
+        let x = i32::try_from(top_left.x);
+        let y = i32::try_from(top_left.y);
         debug_assert!(top_left.x <= down_right.x);
         debug_assert!(top_left.y <= down_right.y);
-        let x: i32 = top_left.x;
-        let y: i32 = top_left.y;
         let width = down_right.x - top_left.x;
         let height = down_right.y - top_left.y;
-        debug_assert!(width.is_positive());
-        debug_assert!(height.is_positive());
-        #[allow(clippy::cast_sign_loss)]
-        Self::new(x, y, width as u32, height as u32)
+        debug_assert!(x.is_ok());
+        debug_assert!(y.is_ok());
+        Self::new(
+            x.expect("Rect coordinates are over i32::MAX"),
+            y.expect("Rect coordinates are over i32::MAX"),
+            width,
+            height,
+        )
     }
 }

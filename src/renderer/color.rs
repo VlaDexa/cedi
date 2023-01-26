@@ -22,3 +22,9 @@ impl From<Color> for sdl2::pixels::Color {
         Self::RGBA(color.r, color.g, color.b, color.a)
     }
 }
+
+impl From<sdl2::pixels::Color> for Color {
+    fn from(color: sdl2::pixels::Color) -> Self {
+        Self::new(color.r, color.g, color.b, color.a)
+    }
+}

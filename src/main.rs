@@ -11,20 +11,20 @@ extern crate ace_it;
 
 mod program;
 mod renderer;
+mod text;
 
 const WINDOW_TITLE: &str = "CEDI";
 const WINDOW_WIDTH: u32 = 800;
 const WINDOW_HEIGHT: u32 = 600;
 
 fn main() {
-    let mut program = Program::new(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT).unwrap();
-    let top_left = Point::new((WINDOW_WIDTH / 8) as i32, (WINDOW_HEIGHT / 6) as i32);
-    let down_right = Point::new(
-        (WINDOW_WIDTH * 7 / 8) as i32,
-        (WINDOW_HEIGHT * 5 / 6) as i32,
-    );
+    let program = Program::new(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT).unwrap();
+    let top_left = Point::new(100, 100);
+    let down_right = Point::new(WINDOW_WIDTH - 100, WINDOW_HEIGHT - 100);
     let rect = Rect::new(top_left, down_right);
-    let render = program.renderer();
+    let font = program.load_font("./fonts/Roboto-Black.ttf", 1000).unwrap();
+    let mut render = program.renderer();
+    render.render_text("Some text", &font, Color::WHITE, rect).unwrap();
     render.place_rect(rect, Color::RED).unwrap();
     render.blit();
     'main_loop: loop {

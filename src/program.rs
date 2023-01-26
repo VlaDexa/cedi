@@ -1,13 +1,14 @@
-use std::fmt::Debug;
+use std::{fmt::Debug, cell::{RefCell, RefMut}};
 
 use sdl2::{EventPump, Sdl};
 
-use crate::renderer::{CreationError, Renderer};
+use crate::{renderer::{CreationError, Renderer}, text::{font_lib::{FontLib, Error}, font::Font}};
 
 pub struct Program {
     _context: Sdl,
-    renderer: Renderer,
-    event_pump: EventPump,
+    renderer: RefCell<Renderer>,
+    event_pump: RefCell<EventPump>,
+    font: FontLib
 }
 
 #[derive(Debug)]
@@ -16,6 +17,7 @@ pub enum InitError {
     ContextInit(String),
     Renderer(CreationError),
     EventPolling(EventError),
+    FontInit(Error)
 }
 
 #[derive(Debug)]
@@ -31,18 +33,24 @@ impl Program {
         let event_pump = context
             .event_pump()
             .map_err(|err| InitError::EventPolling(err.into()))?;
+        let font = FontLib::new()?;
         Ok(Self {
             _context: context,
-            renderer,
-            event_pump,
+            renderer: RefCell::new(renderer),
+            event_pump: RefCell::new(event_pump),
+            font
         })
     }
 
-    pub fn renderer(&mut self) -> &mut Renderer {
-        &mut self.renderer
+    pub fn renderer(&self) -> RefMut<Renderer> {
+        self.renderer.borrow_mut()
     }
 
-    pub fn get_event(&mut self) -> Option<sdl2::event::Event> {
-        self.event_pump.poll_event()
+    pub fn get_event(&self) -> Option<sdl2::event::Event> {
+        self.event_pump.borrow_mut().poll_event()
+    }
+
+    pub fn load_font(&'_ self, path: impl AsRef<std::path::Path>, point: u16) -> Result<Font, crate::text::font::Error> {
+        Font::new(&self.font, path, point)
     }
 }
