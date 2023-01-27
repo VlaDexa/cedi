@@ -22,6 +22,19 @@ impl Rect {
         let points = [first, second];
         Self { points }
     }
+
+    /// Splits given rectangle into an Iterator of n equal rectangles split horizontally
+    pub fn split_horizontal(self, n: u32) -> impl Iterator<Item = Self> {
+        let [top_left, down_right] = self.points;
+        let height = down_right.y - top_left.y;
+        let single_height = height / n;
+        (0..n).map(move |i| {
+            Self::new(
+                Point::new(top_left.x, top_left.y + single_height * i),
+                Point::new(down_right.x, down_right.y - single_height * (n - i - 1)),
+            )
+        })
+    }
 }
 
 impl From<Rect> for sdl2::rect::Rect {

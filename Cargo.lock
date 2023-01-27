@@ -4,9 +4,9 @@ version = 3
 
 [[package]]
 name = "ace_it"
-version = "0.1.0"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "724011f5d5d206db09516d88ee07f241088189ded13e526f12398545ae030ab5"
+checksum = "ffe7e08f1b0ebcbd257efd3e45f32801e5bb03da9539546603fb7f17d33b7b76"
 dependencies = [
  "proc-macro2",
  "quote",
